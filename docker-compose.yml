@@ -11,7 +11,7 @@ services:
       - ./postgres-data:/var/lib/postgresql/data
 
   app:
-    image: golang:1.22
+    build: .
     command:
       - go
       - run
@@ -29,3 +29,8 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=root
       - DB_PORT=5432
+      - GIT_SSL_NO_VERIFY=1  # Ignora verificação SSL no Git
+      - GOPROXY=https://goproxy.cn,direct  # Configura proxy para pacotes Go
+      - GOINSECURE=github.com
+      - GODEBUG=x509ignoreCN=0
+      - GIN_GONIC_GIN_IGNORE_CERTS=1
